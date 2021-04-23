@@ -46,8 +46,15 @@ IntList::IntList(const IntList& source) {
 
 // destructor deletes all nodes
 IntList::~IntList() {
-    //IMPLEMENT THIS
+
+    while (first) {
+        Node* next = first -> next;
+        delete first;
+        first = next;
+    }
+
 }
+
 
 
 // return sum of values in list
@@ -96,7 +103,7 @@ int IntList::max() const {
             max = n -> info;
         }
 
-        n = n-> next;
+        n = n -> next;
     }
 
     return max;
