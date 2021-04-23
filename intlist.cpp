@@ -11,8 +11,6 @@ using std::cout;
 // copy constructor
 IntList::IntList(const IntList& source) {
 
-    //IMPLEMENT THIS
-
     // account for null case
     if (source.first == nullptr) {
         first = nullptr;
@@ -43,18 +41,18 @@ IntList::IntList(const IntList& source) {
 }
 
 
-
 // destructor deletes all nodes
 IntList::~IntList() {
 
     while (first) {
+
         Node* next = first -> next;
         delete first;
         first = next;
+        
     }
 
 }
-
 
 
 // return sum of values in list
@@ -155,10 +153,47 @@ void IntList::insertFirst(int value) {
 IntList& IntList::operator=(const IntList& source){
     //IMPLEMENT
 
+    if ( this != &source ) {
+
+        while (first) {
+
+            Node* next = first -> next;
+            delete first;
+            first = next;
+
+        }
+
+        if (source.first == nullptr) {
+            first = nullptr;
+            return *this;
+        }
+
+        Node *temp = source.first;       // this allows us to create a temp pointer that points to the first node of source
+        Node *curr = nullptr;            // create a variable that points to a null
+        first = new Node;                // we allocate a new node in memory
+
+        first -> info = temp -> info;    // copy the temp value in to the new head node
+        first -> next = nullptr;         // the first's next value will be set to nullptr
+
+        curr = first;                    // point curr to first, curr is supplemental to first
+                                        // curr helps us add onto first
+
+        temp = temp -> next;             // making first node equal to temp, we then move to temp's next
+
+        while (temp) {
+
+            curr -> next = new Node;        // allocate memory for a new node
+            curr = curr -> next;            // point to new node
+            curr -> info = temp -> info;    // copy data over
+            curr -> next = nullptr;         // set next to null
+
+            temp = temp -> next;            // iterate through linkedlist
+        }
+
+    }
 
     return *this;
 }
-
 
 
 // DO NOT CHANGE ANYTHING BELOW (READ IT THOUGH)
